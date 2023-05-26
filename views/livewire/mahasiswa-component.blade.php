@@ -127,8 +127,6 @@
 
                     <!-- Form edit mahasiswa -->
                     <form wire:submit.prevent="editData">
-
-                        <input type="hidden" id="id_mahasiswa" wire:model="id_mahasiswa" />
                         
                         <div class="mb-3">
                             <label for="nim" class="form-label">NIM Mahasiswa</label>
