@@ -9,6 +9,7 @@
             <thead>
                 <tr>
                     <th scope="col">No</th>
+                    <th scope="col">NIM</th>
                     <th scope="col">Nama</th>
                     <th scope="col">Jurusan</th>
                     <th scope="col">Aksi</th>
@@ -25,15 +26,17 @@
 
                 <tr>
                     <td>{{$no++}}</td>
+                    <td>{{$data->nim}}</td>
                     <td>{{$data->nama}}</td>
                     <td>{{$data->jurusan}}</td>
                     <td>
                         <div class="d-flex justify-content-center">
                             <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal"
                                 data-bs-target="#deleteMahasiswa"
-                                wire:click="initDeleteData({{$data->nim}})">Hapus</button>
+                                wire:click="initDeleteData({{$data->id_mahasiswa}})">Hapus</button>
                             <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                data-bs-target="#editMahasiswa" wire:click="initEditData({{$data->nim}})">Edit</button>
+                                data-bs-target="#editMahasiswa"
+                                wire:click="initEditData({{$data->id_mahasiswa}})">Edit</button>
                         </div>
                     </td>
                 </tr>
@@ -67,6 +70,12 @@
 
                     <!-- Form tambah mahasiswa -->
                     <form wire:submit.prevent="storeData">
+
+                        <div class="mb-3">
+                            <label for="nim" class="form-label">NIM Mahasiswa</label>
+                            <input type="text" class="form-control" id="nim" wire:model="nim" autocomplete="off"
+                                maxlength="8" required />
+                        </div>
 
                         <div class="mb-3">
                             <label for="nama" class="form-label">Nama Mahasiswa</label>
@@ -118,6 +127,12 @@
 
                     <!-- Form edit mahasiswa -->
                     <form wire:submit.prevent="editData">
+
+                        <div class="mb-3">
+                            <label for="nim" class="form-label">NIM Mahasiswa</label>
+                            <input type="text" class="form-control" id="nim" wire:model="nim" autocomplete="off"
+                                maxlength="8" required />
+                        </div>
 
                         <div class="mb-3">
                             <label for="nama" class="form-label">Nama Mahasiswa</label>
