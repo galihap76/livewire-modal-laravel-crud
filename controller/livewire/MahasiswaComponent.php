@@ -61,7 +61,7 @@ class MahasiswaComponent extends Component
         $mahasiswa = MahasiswaModel::where('id_mahasiswa', $id_mahasiswa)->first();
 
         // Menetapkan nilai pada property id_mahasiswa, nim, nama, dan jurusan
-        $this->id_mahasiswa = $mahasiswa->id_mahasiswa;
+        $this->id_mahasiswa = $mahasiswa->id_mahasiswa; // -> Otomatis akan mempengaruhi where id_mahasiswa pada function editData() menggunakan livewire
         $this->nim = $mahasiswa->nim;
         $this->nama = $mahasiswa->nama;
         $this->jurusan = $mahasiswa->jurusan;
@@ -104,7 +104,7 @@ class MahasiswaComponent extends Component
         $mahasiswa = MahasiswaModel::where('id_mahasiswa', $id_mahasiswa)->first();
 
         // Menetapkan nilai pada property id_mahasiswa, nim, nama, dan jurusan
-        $this->id_mahasiswa = $mahasiswa->id_mahasiswa;
+        $this->id_mahasiswa = $mahasiswa->id_mahasiswa; // -> Otomatis akan mempengaruhi where id_mahasiswa pada function deleteMahasiswa() menggunakan livewire
         $this->nama = $mahasiswa->nama;
         $this->jurusan = $mahasiswa->jurusan;
     }
