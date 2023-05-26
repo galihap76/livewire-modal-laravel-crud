@@ -8,8 +8,8 @@ use App\Models\MahasiswaModel;
 class MahasiswaComponent extends Component
 {
 
-    // Public property nama, jurusan, nim
-    public $nama, $jurusan, $nim;
+    // Public property id mahasiswa, nim, nama, jurusan
+    public $id_mahasiswa, $nim, $nama, $jurusan;
 
     // Method render() digunakan untuk menampilkan komponen dan mengembalikan view dengan data yang diperlukan
     public function render()
@@ -21,9 +21,10 @@ class MahasiswaComponent extends Component
         return view('livewire.mahasiswa-component', ['data_mahasiswa' => $data_mahasiswa]);
     }
 
-    // Method close() untuk membersihkan kolom inputan bidang nama dan jurusan jika menekan tombol cancel atau silang
+    // Method close() untuk membersihkan kolom inputan bidang nim, nama, dan jurusan jika menekan tombol cancel atau silang
     public function close()
     {
+        $this->nim = null;
         $this->nama = null;
         $this->jurusan = null;
     }
@@ -33,6 +34,7 @@ class MahasiswaComponent extends Component
     {
         // Menyimpan data mahasiswa ke dalam tabel
         $insertTable = MahasiswaModel::create([
+            'nim' => $this->nim,
             'nama' => $this->nama,
             'jurusan' => $this->jurusan
         ]);
@@ -42,7 +44,8 @@ class MahasiswaComponent extends Component
             // Menampilkan flash message store
             session()->flash('store', 'Data mahasiswa berhasil ditambahkan.');
 
-            // Mengosongkan input nama dan jurusan
+            // Mengosongkan input nim, nama, dan jurusan
+            $this->nim = null;
             $this->nama = null;
             $this->jurusan = null;
 
@@ -52,12 +55,13 @@ class MahasiswaComponent extends Component
     }
 
     // Method initEditData() digunakan untuk menginisialisasi data yang akan diubah
-    public function initEditData($nim)
+    public function initEditData($id_mahasiswa)
     {
         // Menginisialisasi data yang akan diubah
-        $mahasiswa = MahasiswaModel::where('nim', $nim)->first();
+        $mahasiswa = MahasiswaModel::where('id_mahasiswa', $id_mahasiswa)->first();
 
-        // Menetapkan nilai pada property nim, nama, dan jurusan
+        // Menetapkan nilai pada property id_mahasiswa, nim, nama, dan jurusan
+        $this->id_mahasiswa = $mahasiswa->id_mahasiswa;
         $this->nim = $mahasiswa->nim;
         $this->nama = $mahasiswa->nama;
         $this->jurusan = $mahasiswa->jurusan;
@@ -67,11 +71,13 @@ class MahasiswaComponent extends Component
     public function editData()
     {
         // Mengambil data mahasiswa yang akan diubah
-        $editMahasiswa = MahasiswaModel::where('nim', $this->nim)->first();
+        $editMahasiswa = MahasiswaModel::where('id_mahasiswa', $this->id_mahasiswa)->first();
 
         // Jika data mahasiswa ditemukan
         if ($editMahasiswa) {
-            // Mengubah nilai pada property nama dan jurusan
+
+            // Mengubah nilai pada property nim, nama, dan jurusan
+            $editMahasiswa->nim = $this->nim;
             $editMahasiswa->nama = $this->nama;
             $editMahasiswa->jurusan = $this->jurusan;
 
@@ -80,7 +86,8 @@ class MahasiswaComponent extends Component
                 // Menampilkan flash message edit
                 session()->flash('edit', 'Data mahasiswa berhasil diubah.');
 
-                // Mengosongkan input nama dan jurusan
+                // Mengosongkan input nim, nama, dan jurusan
+                $this->nim = null;
                 $this->nama = null;
                 $this->jurusan = null;
 
@@ -91,13 +98,13 @@ class MahasiswaComponent extends Component
     }
 
     // Method initDeleteData() digunakan untuk menginisialisasi data yang akan dihapus
-    public function initDeleteData($nim)
+    public function initDeleteData($id_mahasiswa)
     {
         // Menginisialisasi data yang akan dihapus
-        $mahasiswa = MahasiswaModel::where('nim', $nim)->first();
+        $mahasiswa = MahasiswaModel::where('id_mahasiswa', $id_mahasiswa)->first();
 
-        // Menetapkan nilai pada property nim, nama, dan jurusan
-        $this->nim = $mahasiswa->nim;
+        // Menetapkan nilai pada property id_mahasiswa, nim, nama, dan jurusan
+        $this->id_mahasiswa = $mahasiswa->id_mahasiswa;
         $this->nama = $mahasiswa->nama;
         $this->jurusan = $mahasiswa->jurusan;
     }
@@ -106,11 +113,13 @@ class MahasiswaComponent extends Component
     public function deleteMahasiswa()
     {
         // Mengambil data mahasiswa yang akan dihapus
-        $deleteMahasiswa = MahasiswaModel::where('nim', $this->nim)->first();
+        $deleteMahasiswa = MahasiswaModel::where('id_mahasiswa', $this->id_mahasiswa)->first();
 
         // Jika penghapusan berhasil
         if ($deleteMahasiswa->delete()) {
-            // Mengosongkan input nama dan jurusan
+
+            // Mengosongkan input nim, nama, dan jurusan
+            $this->nim = null;
             $this->nama = null;
             $this->jurusan = null;
 
